@@ -1,0 +1,59 @@
+/* 2D Point Class, by Abreto<m@abreto.net> */
+#include <cmath>
+
+using namespace std;
+
+#define EPS (1e-8)
+bool fe(double a, double b) {
+  return ((a-b>=-EPS)&&(a-b<=EPS));
+}
+bool fl(double a, double b) {
+  return (a-b<-EPS);
+}
+bool fle(double a, double b) {
+  return (a-b<=EPS);
+}
+
+template <typename T>
+struct point {
+  T x,y;
+  point(void):x(T()),y(T()) {}
+  point(T xx, T yy):x(xx),y(yy) {}
+  T& operator[](int i) {
+    if(0==i)return x;
+    else return y;
+  }
+  inline point operator-(void) const {
+    return point(-x,-y);
+  }
+  inline point operator+(const point& b) const {
+    return point(x+b.x,y+b.y);
+  }
+  inline point operator-(const point& b) const {
+    return point(x-b.x,y-b.y);
+  }
+  inline T operator*(const point& b) const {
+    return ((x)*(b.x))+((y)*(b.y)); /* inner product */
+  }
+  inline T operator^(const point& b) const {
+    return ((x)*(b.y))-((b.x)*(y)); /* outter product */
+  }
+  inline point& operator+=(const point& b) {
+    point tmp=(*this)+b;
+    (*this)=tmp;
+    return (*this);
+  }
+  inline point& operator-=(const point& b) {
+    point tmp=(*this)-b;
+    (*this)=tmp;
+    return (*this);
+  }
+  inline bool operator==(const point& b) const {
+    return (x==b.x)&&(y==b.y);
+  }
+  inline bool operator!=(const point& b) const {
+    return !((*this)==b);
+  }
+};
+
+#define vec point
